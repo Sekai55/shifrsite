@@ -40,7 +40,7 @@
             description: 'Использование квадратной матрицы ключа для шифрования и дешифрования текста',
             newPageRoute: '/shifr/hill-theory'
           },
-          {
+          { 
             title: 'Ранцевая криптосистема Меркла — Хеллмана',
             imageSrc: require("../assets/ShifrAssets/MercHel.jpg"),
             description: 'Это асимметричный метод шифрования основанный на задаче о рюкзаке',
