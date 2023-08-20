@@ -40,7 +40,7 @@
             description: 'Использование квадратной матрицы ключа для шифрования и дешифрования текста',
             newPageRoute: '/shifr/hill-theory'
           },
-          { 
+          {  
             title: 'Ранцевая криптосистема Меркла — Хеллмана',
             imageSrc: require("../assets/ShifrAssets/MercHel.jpg"),
             description: 'Это асимметричный метод шифрования основанный на задаче о рюкзаке',
@@ -53,22 +53,22 @@
             newPageRoute: '/shifr/messi-omur-theory'
           },
           {
-            title: '',
-            imageSrc: require("../assets/ShifrAssets/MercHel.jpg"),
-            description: '',
-            newPageRoute: '/shifr/merc-helman-theory'
+            title: 'Криптосистема RSA',
+            imageSrc: require("../assets/ShifrAssets/RSA.png"),
+            description: 'Асимметричного шифрованияе с использованием функции Эйлера для создания цифровых подписей',
+            newPageRoute: '/shifr/RSA-theory'
           },
           {
-            title: '',
-            imageSrc: require("../assets/ShifrAssets/MercHel.jpg"),
-            description: '',
-            newPageRoute: '/shifr/merc-helman-theory'
+            title: 'Криптосистема на конечных полях',
+            imageSrc: require("../assets/ShifrAssets/KPole.png"),
+            description: 'Двоичное поле с n битами для арифметических операций',
+            newPageRoute: '/shifr/KPole-theory'
           },
           {
-            title: '',
+            title: 'Генератор псевдослучайных чисел',
             imageSrc: require("../assets/ShifrAssets/MercHel.jpg"),
             description: '',
-            newPageRoute: '/shifr/merc-helman-theory'
+            newPageRoute: '/shifr/randomgen-theory'
           },
         ]
       };

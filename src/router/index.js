@@ -9,7 +9,9 @@ import GroupCalc from '../components/ShifrsFolder/group/GroupCalc.vue'
 import HillCalc from '../components/ShifrsFolder/Hill/HillCalc.vue'
 import MercHelCalc from '../components/ShifrsFolder/MercHelman/MercHelmanCalc.vue'
 import MessiOmurCalc from '../components/ShifrsFolder/MessiOmur/MessiOmurCalc.vue'
-
+import RSACalc from '../components/ShifrsFolder/RSA/RSACalc.vue'
+import KPoleCalc from '../components/ShifrsFolder/KPole/KPoleCalc.vue'
+import RandomGenCalc from '../components/ShifrsFolder/RandomGen/RandomGenCalc.vue'
 const routes = [
   {
     path: '/',
@@ -74,6 +76,30 @@ const routes = [
     {
       path: 'messi-omur-calculator',
       component: MessiOmurCalc
+    },
+    {
+      path: 'RSA-theory',
+      component: () => import('../components/ShifrsFolder/RSA/RSATheory.vue')
+    },
+    {
+      path: 'RSA-calculator',
+      component: RSACalc
+    },
+    {
+      path: 'KPole-theory',
+      component: () => import('../components/ShifrsFolder/KPole/KPoleTheory.vue')
+    },
+    {
+      path: 'KPole-calculator',
+      component: KPoleCalc
+    },
+    {
+      path: 'randomgen-theory',
+      component: () => import('../components/ShifrsFolder/RandomGen/RandomGenTheory.vue')
+    },
+    {
+      path: 'randomgen-calculator',
+      component: RandomGenCalc
     }
 
   ]

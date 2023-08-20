@@ -58,10 +58,12 @@ export default {
 
 .card-content {
   display: flex;
-  align-items: center;
 }
 
 .card-description {
+  display: inline-block; /* Делаем div инлайновым блоком */
+  line-height: 1; /* Устанавливаем высоту строки на минимум, чтобы убрать лишний отступ сверху */
+  vertical-align: top; /* Выравнивание по верхнему краю */
   flex: 1;
 }
 
