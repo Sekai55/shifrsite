@@ -1,21 +1,14 @@
 <template>
-    <div id="app">
-      <div class="head">
       <SiteHeader />
-      </div>
-      <div class="bodyApp">
-      <Transition name = "router-anim" enter-active-class="animated fadeIn" >
-      <RouterView/>
-      </Transition>
+      <div class="content">
+        <router-view v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
+      <component :is="Component" />
+    </transition>
+  </router-view>
       <!-- <TestMark/> -->
       </div>
-      <div class = "foot">
       <SiteFooter />
-      </div>
-    </div>
-    <div class = "test">
-      
-    </div>
 </template>
 
 <script>
@@ -36,17 +29,23 @@ export default {
 </script>
 
 <style>
-@import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
-@font-face{
-font-family: "Galiver Sans";
-src: local("Galiver Sans"), url(@/assets/galiver-sans.bold.ttf) format("truetype");
-}
+@font-face {   
+font-family: "Galiver Sans";   
+src: url(@/assets/galiver-sans.bold.ttf) format('woff'),        
+url(@/assets/galiver-sans.bold.ttf) format('eot');   
+font-weight: 400;   
+font-style: normal;   
+font-display: block; }
+
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
-html {
-  min-height: 100%;
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 .test{
   background-color: blueviolet;
@@ -55,10 +54,13 @@ html {
 margin-bottom: 72px;
 }
 
-.bodyApp{
-min-height: 582px;
+.content {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  flex: 1; /* Занимает всю доступную высоту */
 }
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -66,9 +68,22 @@ min-height: 582px;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 .page {
     position: fixed;
     width: inherit;
   }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

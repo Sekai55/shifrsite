@@ -41,6 +41,12 @@
             newPageRoute: '/shifr/hill-theory'
           },
           {  
+            title: 'Шифр Цезаря',
+            imageSrc: require("../assets/ShifrAssets/Caesaric.png"),
+            description: 'Простой метод шифрования, использующий сдвиг в алфавите',
+            newPageRoute: '/shifr/caesar-theory'
+          },
+          {  
             title: 'Ранцевая криптосистема Меркла — Хеллмана',
             imageSrc: require("../assets/ShifrAssets/MercHel.jpg"),
             description: 'Это асимметричный метод шифрования основанный на задаче о рюкзаке',
@@ -66,8 +72,8 @@
           },
           {
             title: 'Генератор псевдослучайных чисел',
-            imageSrc: require("../assets/ShifrAssets/MercHel.jpg"),
-            description: '',
+            imageSrc: require("../assets/ShifrAssets/RandomGen.png"),
+            description: 'Генерации числовой последовательности, которая кажется случайной, но на самом деле определена начальным состоянием',
             newPageRoute: '/shifr/randomgen-theory'
           },
         ]

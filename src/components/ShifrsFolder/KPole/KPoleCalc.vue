@@ -9,7 +9,7 @@
         <input class="input" v-model="divisorInput" @input="secondHandleInput" placeholder="Введите многочлен" />
         </div>
         
-      <button @click="apply" class="button">Вычислить остаток</button>
+      <button @click="apply" class="button">Обработать</button>
       <div class="output">
         <p>Вывод:</p>
         <p>{{ result }}</p>

@@ -5,9 +5,10 @@
       <li><router-link to="/"> На главную </router-link></li>
       <li><router-link to="/about"> О Нас </router-link></li>
       <li><router-link to="/shifr"> Выбор шифра </router-link></li>
+      <li><router-link to="/contact"> Контакты </router-link></li>
     </div>
 
-    <div class="logo-container">
+    <div class="logo-container" @click="redirectToHome">
       <img src="../assets/logo.png" alt="Logo" class="logo">
       <h1 class="site-title"> ᕲᘉᘿᐺᘉᓰᖽᐸ SᕼᓰᖴᖇᓍᐺᗩᒪSᕼᑢᕼᓰᖽᐸᗩ </h1>
     </div>
@@ -20,7 +21,12 @@
       return {
         showMenu: false
       }
-    }
+    },
+    methods: {
+    redirectToHome() {
+      this.$router.push('/');
+    },
+  }
   }
   </script>
   

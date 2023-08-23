@@ -12,6 +12,7 @@ import MessiOmurCalc from '../components/ShifrsFolder/MessiOmur/MessiOmurCalc.vu
 import RSACalc from '../components/ShifrsFolder/RSA/RSACalc.vue'
 import KPoleCalc from '../components/ShifrsFolder/KPole/KPoleCalc.vue'
 import RandomGenCalc from '../components/ShifrsFolder/RandomGen/RandomGenCalc.vue'
+import CaesarCalc from '../components/ShifrsFolder/Caesar/CaesarCalc.vue'
 const routes = [
   {
     path: '/',
@@ -27,6 +28,11 @@ const routes = [
     path: '/about',
     name: 'about',
     component: () => import('../views/AboutPage.vue')
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: () => import('../views/ContactForm.vue')
   },
   {
     path: '/shifr',
@@ -60,6 +66,14 @@ const routes = [
     {
       path: 'hill-calculator',
       component: HillCalc
+    },
+    {
+      path: 'caesar-theory',
+      component: () => import('../components/ShifrsFolder/Caesar/CaesarTheory.vue')
+    },
+    {
+      path: 'caesar-calculator',
+      component: CaesarCalc
     },
     {
       path: 'merc-helman-theory',

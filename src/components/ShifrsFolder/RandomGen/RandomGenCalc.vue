@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="section">
-        <label class="label">многочлен</label>
+        <label class="label">Многочлен</label>
         <input class="input" v-model="divisorInput" @input="secondHandleInput" placeholder="Введите многочлен" />
         </div>    
       <button @click="apply" class="button">Обработать</button>

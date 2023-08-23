@@ -1,8 +1,8 @@
 <template>
     <div>
-      <h1>Error</h1>
+      <h1>Ошибка</h1>
       <p>{{ errorMessage }}</p>
-      <p>Error type: {{ errorType }}</p>
+      <p>Тип Ошибки: {{ errorType }}</p>
     </div>
   </template>
   
@@ -11,7 +11,7 @@
     props: {
       errorMessage: {
         type: String,
-        default: 'An error occurred.'
+        default: 'Простите, но страница не найдена :('
       },
       errorType: {
         type: String,
