@@ -76,6 +76,18 @@
             description: 'Генерации числовой последовательности, которая кажется случайной, но на самом деле определена начальным состоянием',
             newPageRoute: '/shifr/randomgen-theory'
           },
+          // {
+          //   title: 'DES',
+          //   imageSrc: require("../assets/ShifrAssets/RandomGen.png"),
+          //   description: 'DES',
+          //   newPageRoute: '/shifr/DES-theory'
+          // },
+          {
+            title: 'Матричное шифрование',
+            imageSrc: require("../assets/ShifrAssets/Matrix.png"),
+            description: 'Преобразования данных с помощью матриц',
+            newPageRoute: '/shifr/Matrix-theory'
+          }
         ]
       };
     }

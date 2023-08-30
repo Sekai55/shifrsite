@@ -13,6 +13,8 @@ import RSACalc from '../components/ShifrsFolder/RSA/RSACalc.vue'
 import KPoleCalc from '../components/ShifrsFolder/KPole/KPoleCalc.vue'
 import RandomGenCalc from '../components/ShifrsFolder/RandomGen/RandomGenCalc.vue'
 import CaesarCalc from '../components/ShifrsFolder/Caesar/CaesarCalc.vue'
+import DESCalc from '../components/ShifrsFolder/DES/DESCalc.vue'
+import MatrixCalc from '../components/ShifrsFolder/Matrix/MatrixCalc.vue'
 const routes = [
   {
     path: '/',
@@ -114,6 +116,22 @@ const routes = [
     {
       path: 'randomgen-calculator',
       component: RandomGenCalc
+    },
+    {
+      path: 'DES-theory',
+      component: () => import('../components/ShifrsFolder/DES/DESTheory.vue')
+    },
+    {
+      path: 'DES-calculator',
+      component: DESCalc
+    },
+    {
+      path: 'Matrix-theory',
+      component: () => import('../components/ShifrsFolder/Matrix/MatrixTheory.vue')
+    },
+    {
+      path: 'Matrix-calculator',
+      component: MatrixCalc
     }
 
   ]

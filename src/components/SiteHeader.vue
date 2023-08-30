@@ -85,6 +85,7 @@
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
+  user-select: none;
 }
 
 .logo {
