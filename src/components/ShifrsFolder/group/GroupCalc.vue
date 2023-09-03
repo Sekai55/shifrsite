@@ -26,6 +26,51 @@
           <p>Вывод:</p>
           <p>{{ output }}</p>
         </div>
+
+        <div class = "text" v-show="isBlockVisible">
+          <h1>Пояснения</h1>
+          <h2>1-й Этап</h2>
+          <p>
+           Сначала мы задаём кодирование для нашей матрицы 
+          </p>
+
+          <div v-for="(binary, index) in binaryStrings" :key="binary">
+            {{ binary }} → {{ table[0][index] }}
+          </div>
+
+          <p>
+           Как вы можете заметить для 100, 010, 001 заданы 1-я 2-я и 3-я строчки матрицы соответственно
+           </p>
+           <p>
+           Для 110, 011, 101, 111 применяется сумма по модулю 2 соответствующих строк
+          </p>
+          <h2>2-й Этап</h2>
+          <p>
+           Составим таблицу декодирования
+           </p>
+          <div v-for="(binary, index) in table" :key="binary">
+            {{ table[index].join(' | ') }}
+          </div>
+          <p>
+            Первая строка - это строка кодовых слов из 1-го этапа. 
+          </p>
+          <p>
+            А первый столбец это лидеры. Т.е слова содержащие минимальное количество единиц, но не повторяющиеся с предыдущими
+          </p>
+          <p>
+            Генерация происходит так: В новой строке выбирается лидер и суммируется с кодовым словом в каждом столбце по модулю 2, ответы записываются в строку соответственно столбцам 
+          </p>
+          <h2>3-й Этап</h2>
+          <p>
+           Теперь необходимо найти в таблице слово-шифр.
+          </p>
+          <p>
+           Оно находится по координатам: [{{ coord.i + 1 }},{{ coord.j + 1}}]
+          </p>
+          <p>
+           Далее от нашего слова идём вверх и смотрим кодовое слово, это и будет ответ. {{ output }}
+          </p>
+        </div>
   </div>
 </template>
   
@@ -41,6 +86,12 @@ export default {
             string: [0, 0, 0, 0, 0, 0],
             output: '',
             table: new Array(8).fill().map(() => new Array(8).fill().map(() => new Array(6).fill(0))),
+            binaryStrings: [
+              "000", "001", "010", "011",
+              "100", "101", "110", "111"
+            ],
+            coord:{},
+            isBlockVisible: false
         };
         },
         methods: {
@@ -53,36 +104,47 @@ export default {
         },
 
         fillFirstColumn(arr) {
-        let check = 1;
         const compareValues = [[1,0,0,0,0,0],[0,1,0,0,0,0],[0,0,1,0,0,0],
                       [0,0,0,1,0,0],[0,0,0,0,1,0],[0,0,0,0,0,1],
                       [0,0,0,0,1,1],[0,0,0,1,0,1],[0,0,1,0,0,1],
                       [0,1,0,0,0,1],[1,0,0,0,0,1],[0,0,0,1,1,0],
                       [0,0,1,0,1,0],[0,1,0,0,1,0],[1,0,0,0,1,0],
                       [0,0,1,1,0,0],[0,1,0,1,0,0],[1,0,0,1,0,0],
-                      [0,1,1,0,0,0],[1,0,1,0,0,0],[1,1,0,0,0,0]];
+                      [0,1,1,0,0,0],[1,0,1,0,0,0],[1,1,0,0,0,0],
+                      [0,0,0,1,1,1],[0,0,1,0,1,1],[0,1,0,0,1,1],
+                      [1,0,0,0,1,1],[0,0,1,1,0,1],[0,1,0,1,0,1],
+                      [1,0,0,1,0,1],[0,1,1,0,0,1],[1,1,0,0,0,1],
+                      [0,0,1,1,1,0],[0,1,0,1,1,0],[1,0,0,1,1,0],
+                      [0,1,1,0,1,0],[1,0,1,0,1,0],[1,1,0,0,1,0],
+                      [0,1,1,1,0,0],[1,0,1,1,0,0],[1,1,0,1,0,0],
+                      [1,1,1,0,0,0]];
          
-        for (let i = 0; i < compareValues.length; i++) {
-        check = 1
-          for (let j = 0; j < arr.length; j++) {
-            if (JSON.stringify(arr[j][0]) === JSON.stringify(compareValues[i])) {
-                check = 0;
-                break
+        for (let n = 0; n < compareValues.length; n++) {
+        let check = true;
+        for (let i = 0; i < arr.length; i++) {
+          if (!check) break;
+          for (let j = 0; j < arr[i].length; j++) {
+            if (this.compareArrays(compareValues[n], arr[i][j])) {
+              check = false;
+              break;
             }
           }
-          if(check == 1)
-          for(let k = 0; k < arr[0].length; k++ ){
-              if (JSON.stringify(arr[0][k]) === JSON.stringify(compareValues[i])) {
-                check = 0;
-              }
+        }
+        if (check) {
+          return compareValues[n];
+        }
+        }
+        },
+        compareArrays(arr1, arr2) {
+          if (arr1.length !== arr2.length) {
+            return false;
           }
-          
-        if(check == 1){
-          return compareValues[i];
-        }
-        }
-
-        
+          for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+              return false;
+            }
+          }
+          return true;
         },
         fillSumMod2(arr) {
           for (let i = 1; i < arr.length; i++) {
@@ -96,6 +158,7 @@ export default {
           for (let i = 0; i < arr3D.length; i++) {
             for (let j = 0; j < arr3D[i].length; j++) {
               if (JSON.stringify(arr) === JSON.stringify(arr3D[i][j])) {
+                this.coord = {i,j}
                 return arr3D[0][j];
               }
             }
@@ -108,6 +171,7 @@ export default {
           return decimalNumber;
         },
         packFunk(){
+        this.table = new Array(8).fill().map(() => new Array(8).fill().map(() => new Array(6).fill(0)))
         this.table [0][0] = [0, 0, 0, 0, 0, 0]
         this.table [0][1] = this.matrix[2]
         this.table [0][2] = this.matrix[1]
@@ -118,8 +182,9 @@ export default {
         this.table [0][7] = this.addArraysMod2(this.addArraysMod2(this.matrix[0], this.matrix[1]), this.matrix[2])
         for(let i = 1; i < this.table.length; i++){
           this.table [i][0] = this.fillFirstColumn(this.table)
+          this.fillSumMod2(this.table)
         }
-        this.fillSumMod2(this.table)
+        
         this.output = this.searchArray(this.string , this.table).join('') + " или " + this.binaryToDecimal(this.searchArray(this.string , this.table))
         console.log (this.table)
         },
@@ -173,6 +238,7 @@ export default {
         alert("Проверьте введенные данные");
         } else {
           this.packFunk();
+          this.isBlockVisible = true;
         }}
         }
     },};
@@ -253,7 +319,25 @@ button:hover {
 }
 
 p {
-  margin: 0;
+  margin-bottom: 10px;
+}
+.container {
+margin-right: 20px;
+margin-left: 20px;
+overflow: auto;
+max-width: 1000px;
+margin: 0 auto;
+padding: 20px;
 }
 
+.text {
+font-size: 18px;
+line-height: 1.5;
+text-align: center;
+}
+.output{
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+}
 </style>

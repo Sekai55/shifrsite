@@ -26,7 +26,7 @@
       <label class="label">ключ шифрования</label>
       <input class="input" type="number" v-model="keyValue" />
     </div>
-  </div>
+  
     <button @click="apply" class="button">Обработать</button>
     <div class="output">
       <p>Вывод:</p>
@@ -49,6 +49,7 @@
       </div>
       <p>{{ result }}</p>
     </div>
+  </div>
   </template>
     
   <script>

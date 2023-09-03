@@ -26,6 +26,9 @@ const routes = [
   {
     path: '/game', component: () => import('../game/PokeGm.vue')
   },
+  // {
+  //   path: '/chess', component: () => import('../game/ChessGm.vue')
+  // },
   {
     path: '/about',
     name: 'about',

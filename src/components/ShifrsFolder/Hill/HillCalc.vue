@@ -21,6 +21,70 @@
       <p>Вывод:</p>
       <p>{{ result }}</p>
     </div>
+    <div class = "text" v-show="isBlockVisible">
+          <h1>Пояснения</h1>
+          <h2>1-й Этап</h2>
+          <p>
+           Сначала мы составим матрицу из нашего ключа 
+          </p>
+          <p>
+           Начиная с а=0 присвоим всем буквам свой номер
+          </p>
+          <span class="label">M=</span>
+          <div v-for="(binary, index) in keyMatrix" :key="binary" class="matrix-container">
+            {{ keyMatrix[index].join(' | ') }}
+          </div>
+
+          <p>
+           Теперь найдем определитель этой матрицы по заданному модулю (длине алфавита)
+          </p>
+          <span class="label">|M|= {{ det }} (mod {{ alphabet.length }})</span>
+          <p>
+           Найдем значение X (обратный элемент в кольце по модулю)<br> для которого справедливо уравнение 
+           <span class="label">{{ det }}*X = 1 (mod {{ alphabet.length }})</span><br>
+           <span class="label">X = {{ x }}</span>
+          </p>
+          <p>
+           Далее надо найти союзную матрицу т.е. матрицу, составленную из алгебраических дополнений для соответствующих элементов транспонированной матрицы
+          </p>
+          <span class="label">матрица из алгебраических дополнений</span>
+          <div v-for="(binary, index) in dopMtx" :key="binary" class="matrix-container">
+            {{ dopMtx[index].join(' | ') }}
+          </div>
+          <p>
+          //Транспонируем//  
+          </p>
+          <span class="label">Союзная матрица</span>
+          <div v-for="(binary, index) in adjMtx" :key="binary" class="matrix-container">
+            {{ adjMtx[index].join(' | ') }}
+          </div>
+          <p>
+          Теперь каждый элемент умножаем на наш X и все это по модулю
+          </p>
+          <span class="label">Получившаяся обратная матрица</span>
+          <div v-for="(binary, index) in dirMtx" :key="binary" class="matrix-container">
+            {{ dirMtx[index].join(' | ') }}
+          </div>
+          <p>
+           Далее берем первые три символа шифра, даём им номера и как бы делаем из них матрицу 3 на 1, и перемножаем эту матрицу на обратную. 
+          </p>
+          <div class="matrix-container">
+            {{ StrNum[0] }} | {{ StrNum[1] }} | {{ StrNum[2] }}
+          </div>
+          <span class="label">X</span>
+          <div v-for="(binary, index) in dirMtx" :key="binary" class="matrix-container">
+            {{ dirMtx[index].join(' | ') }}
+          </div>
+          <p>
+           Получается 
+          </p>
+          <div class="matrix-container">
+            {{ multiMtx[0] }} | {{ multiMtx[1] }} | {{ multiMtx[2] }}
+          </div>
+          <p>
+           После этого следующие 3 символа, и так до конца 
+          </p>
+        </div>
   </div>
 </template>
   
@@ -31,8 +95,17 @@ export default {
       alphabet: 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя., ?',
       word: '',
       key: '',
+      keyMatrix: [],
+      det:0,
+      dopMtx:[[]],
+      adjMtx:[[]],
+      dirMtx:[[]],
+      StrNum:[],
+      multiMtx:[],
+      x:0,
       encrypt: false,
       result: '',
+      isBlockVisible: false
     };
   },
   methods: { 
@@ -48,15 +121,24 @@ export default {
         if( (Math.sqrt(this.key.length) % 1) !== 0)
         alert("Неверный ключ. Длина ключа должна быть квадратом целого числа")
         else{
-        if( this.encrypt == false)
+        if( this.encrypt == false){
         this.result = this.hillDecrypt(this.word, this.key)//расшифровка
+        this.isBlockVisible = true;
+        }
         else{
         this.result = this.hillIncrypt(this.word, this.key)//шифровка
         }}}}
     },
     hillDecrypt(text, key) {
+        this.keyMatrix =  [];
+        this.det = 0;
+        this.dopMtx = [[]];
+        this.adjMtx = [[]];
+        this.dirMtx = [[]];
+        this.StrNum = [];
+        this.multiMtx = [];
+        this.x = 0;
         const matrixSize = Math.sqrt(key.length);
-        const keyMatrix = [];
 
         // Создаю матрицу из ключа
         for (let i = 0; i < matrixSize; i++) {
@@ -65,29 +147,30 @@ export default {
             const index = i * matrixSize + j;
             row.push(this.alphabet.indexOf(key[index]));
             }
-            keyMatrix.push(row);
+            this.keyMatrix.push(row);
             
         }
         //вывод в консоль информации о этапах вычисления
         console.log("матрица-ключ: ");
-        console.log(keyMatrix);
+        console.log(this.keyMatrix);
         console.log("алфавит/модуль: " + this.alphabet.length);
-        const det = this.findModulus(this.determinant(keyMatrix),this.alphabet.length) ;
-        console.log("Определитель: " + det);
-        const x = this.findX(this.findModulus(det,this.alphabet.length),this.alphabet.length);
-        console.log("Обратный элемент в кольце: " + x);
+        this.det = this.findModulus(this.determinant(this.keyMatrix),this.alphabet.length) ;
+        console.log("Определитель: " + this.det);
+        this.x = this.findX(this.findModulus(this.det,this.alphabet.length),this.alphabet.length);
+        console.log("Обратный элемент в кольце: " + this.x);
         console.log("союзная матрица: ");
-        const adjMtx = this.adjointMatrix(keyMatrix);
-        console.log(adjMtx);
+        this.adjMtx = this.adjointMatrix(this.keyMatrix);
+        console.log(this.adjMtx);
         console.log("рабочаяя матрица: ");
-        const dirMtx = this.dirrectMatrix(adjMtx, x, this.alphabet.length);
-        console.log(dirMtx);
+        this.dirMtx = this.dirrectMatrix(this.adjMtx, this.x, this.alphabet.length);
+        console.log(this.dirMtx);
         console.log("Индексированное слово:");
+        this.StrNum = this.string2Array(this.word)
         console.log(this.string2Array(this.word));
-        const multiMtx = this.multiplyMatrix(dirMtx, this.string2Array(this.word));
+        this.multiMtx = this.multiplyMatrix(this.dirMtx, this.StrNum);
         console.log("Расшифрованное слово: ");
-        console.log(multiMtx);
-        const withoutNaN = multiMtx.filter((value) => !isNaN(value));
+        console.log(this.multiMtx);
+        const withoutNaN = this.multiMtx.filter((value) => !isNaN(value));
         console.log("Расшифрованное слово без мусорных значений: ");
         console.log(withoutNaN);
         console.log("Конечное расшифрованное слово: ");
@@ -271,6 +354,7 @@ export default {
           }
         }
       }
+      this.dopMtx = adjMatrix;
       return this.transpose(adjMatrix);
     },
     getMinor(matrix, row, col) {
@@ -365,12 +449,25 @@ export default {
   background-color: #0056b3;
 }
 
+.text {
+font-size: 18px;
+line-height: 1.5;
+text-align: center;
+}
 .output {
   margin-top: 20px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.5;
   text-align: center;
 }
 
 .output p:first-of-type {
   font-weight: bold;
+}
+.matrix-container {
+  display: flex; /* Или используйте grid, в зависимости от предпочтений */
+  flex-direction: column; /* Для вывода строк вертикально */
+  /* grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));  Использование grid */
 }
 </style>
