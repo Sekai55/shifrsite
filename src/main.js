@@ -1,5 +1,12 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import VueMeta from 'vue-meta';
-createApp(App).use(router).use(VueMeta).mount('#app')
+import { createMetaManager } from 'vue-meta'
+
+const app = createApp(App);
+
+app.use(createMetaManager()) 
+
+app.use(router);
+
+app.mount('#app');
