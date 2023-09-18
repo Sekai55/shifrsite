@@ -1,4 +1,7 @@
 <template>
+  <metainfo>
+    <template v-slot:title="{ content }">{{ content ? `${content} | Shifrus.ru` : `Shifrus.ru` }} </template>
+  </metainfo>
       <SiteHeader />
       <div class="content">
         <router-view v-slot="{ Component }">
@@ -15,8 +18,16 @@
 import SiteHeader from "./components/SiteHeader.vue";
 import SiteFooter from "./components/SiteFooter.vue";
 // import TestMark from "./components/TestMark.vue";
+import { useMeta } from 'vue-meta'
 
 export default {
+  setup () {
+    useMeta({
+      title: '',
+      description:'',
+      htmlAttrs: { lang: 'ru', amp: true },
+    })
+  },
   name: "App",
   components: {
     SiteHeader,

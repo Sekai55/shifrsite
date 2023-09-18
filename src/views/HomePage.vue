@@ -7,18 +7,11 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HomePage.vue'
+import { useMeta } from 'vue-meta'
 
 export default {
-  name: 'HomeView',
-  metaInfo: {
-    title: 'Всё о методах шифрования', // Заголовок страницы
-    meta: [
-      {
-        name: 'description',
-        content: 'На этом сайте вы сможете ознакомится с различными методами шифрования информации и погрузится в мир криптографии' // Мета-описание
-      },
-
-    ]
+  setup () {
+    useMeta({ title: 'Главная страница' , description: 'Всё о методах шифрования и дешифрования информации. Погрузитесь в мир криптографии'})
   },
   components: {
     HelloWorld
