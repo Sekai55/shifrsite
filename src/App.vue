@@ -23,8 +23,8 @@ import { useMeta } from 'vue-meta'
 export default {
   setup () {
     useMeta({
-      title: '',
-      description:'',
+      title: 'Shifrus.ru',
+      description:'Всё о методах шифрования и дешифрования информации. Погрузитесь в мир криптографии',
       htmlAttrs: { lang: 'ru', amp: true },
     })
   },
