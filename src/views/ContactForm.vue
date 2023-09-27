@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   data() {
     return {
@@ -81,8 +80,21 @@ export default {
       }
 
       try {
-        const response = await axios.post('http://localhost:3000/contacts', this.formData);
-        console.log('Form submitted:', response.data);
+            const response = await fetch("https://formspree.io/f/xoqopaqy", {
+              method: "POST",
+              body: JSON.stringify(this.formData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            if (response.ok) {
+              // Успешно отправлено
+              console.error("Форма успешно отправлена!");
+            } else {
+              // Ошибка при отправке
+              throw("Произошла ошибка при отправке формы.");
+            }
 
         // Очистка данных после успешной отправки
         this.formData = {
